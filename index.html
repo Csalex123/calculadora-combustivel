@@ -34,6 +34,7 @@
               <option value="">Selecione o estado</option>
               <!-- Estados serão carregados dinamicamente -->
             </select>
+            <small class="form-text">Ao selecionar o estado, a aplicação irá pegar o preço do combustível atual em tempo no estado.</small>
           </div>
         </div>
         <div class="mb-3">
@@ -48,6 +49,7 @@
             required
             oninput="validarCampos()"
           />
+          <small class="form-text">Informe a distância total que você irá percorrer.</small>
         </div>
         <div class="form-row mb-3">
           <div class="form-group">
@@ -58,10 +60,11 @@
               type="number"
               class="form-control"
               id="consumoGasolina"
-              placeholder="Ex: 10 (Consumo médio do seu carro)"
+              placeholder="Ex: 10 "
               required
               oninput="validarCampos(); desbloquearCampoPreco('precoGasolina', 'consumoGasolina')"
             />
+            <small class="form-text">Consumo médio do seu carro com gasolina.</small>
           </div>
           <div class="form-group">
             <label for="consumoEtanol" class="form-label"
@@ -71,10 +74,11 @@
               type="number"
               class="form-control"
               id="consumoEtanol"
-              placeholder="Ex: 7 (Consumo médio do seu carro)"
+              placeholder="Ex: 7 "
               required
               oninput="validarCampos(); desbloquearCampoPreco('precoEtanol', 'consumoEtanol')"
             />
+            <small class="form-text">Consumo médio do seu carro com etanol.</small>
           </div>
         </div>
         <div class="form-row mb-3">
@@ -93,8 +97,8 @@
             />
             <small
               id="precoGasolinaMensagem"
-              class="form-text text-muted"
-            ></small>
+              class="form-text"
+            >Informe o preço atual da gasolina.</small>
           </div>
           <div class="form-group">
             <label for="precoEtanol" class="form-label"
@@ -111,8 +115,8 @@
             />
             <small
               id="precoEtanolMensagem"
-              class="form-text text-muted"
-            ></small>
+              class="form-text"
+            >Informe o preço atual do etanol.</small>
           </div>
         </div>
         <div id="alertas" class="mt-3"></div>
@@ -124,8 +128,9 @@
             onchange="calcular()"
           />
           <label class="form-check-label" for="idaEVolta"
-            ><span class="material-icons icon">swap_horiz</span>Adicionar o caminho de volta</label
+            ><span class="material-icons icon">swap_horiz</span></label
           >
+          <small class="form-text"> Marque esta opção se você irá fazer o percurso de ida e volta.</small>
         </div>
         <div class="d-grid gap-2">
           <button

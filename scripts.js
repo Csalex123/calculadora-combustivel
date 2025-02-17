@@ -66,14 +66,16 @@ async function obterPrecoCombustivel() {
     precoEtanolInput.disabled = false;
     if (!precoGasolina) {
       alertas.innerHTML += `
-        <div class="alert alert-warning" role="alert">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
           <i class="material-icons icon">warning</i> Preço da <b>gasolina</b> não encontrado no sistema. Por favor, preencha o preço manualmente.
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
       `;
     }
     alertas.innerHTML += `
-      <div class="alert alert-warning" role="alert" id="alertaEtanol">
+      <div class="alert alert-warning alert-dismissible fade show" role="alert" id="alertaEtanol">
         <i class="material-icons icon">warning</i> Preço do <b>etanol</b> não encontrado no sistema. Por favor, preencha o preço manualmente.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
     `;
   } catch (error) {
