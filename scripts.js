@@ -129,6 +129,54 @@ async function obterPrecoCombustivel() {
   }
 }
 
+async function obterPrecoCombustivelEconomia() {
+  const estado = document.getElementById("estado").value;
+  const precoGasolinaInput = document.getElementById("precoGasolinaEconomia");
+  const precoEtanolInput = document.getElementById("precoEtanolEconomia");
+  const alertas = document.getElementById("alertas");
+  precoGasolinaInput.disabled = true;
+  precoEtanolInput.disabled = true;
+  alertas.innerHTML = "";
+
+  if (!estado) {
+    precoGasolinaInput.value = "";
+    precoEtanolInput.value = "";
+    precoGasolinaInput.disabled = false;
+    precoEtanolInput.disabled = false;
+    return;
+  }
+
+  try {
+    const response = await axios.get(`https://api.allorigins.win/get?url=${encodeURIComponent('https://combustivelapi.com.br/api/precos')}`);
+    const data = JSON.parse(response.data.contents);
+    const precoGasolina = data.precos.gasolina[estado.toLowerCase()];
+    precoGasolinaInput.value = precoGasolina ? precoGasolina : "";
+    precoGasolinaInput.disabled = false;
+    precoEtanolInput.disabled = false;
+    if (!precoGasolina) {
+      alertas.innerHTML += `
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <i class="material-icons icon">warning</i> Preço da <b>gasolina</b> não encontrado no sistema. Por favor, preencha o preço manualmente.
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      `;
+    }
+    alertas.innerHTML += `
+      <div class="alert alert-warning alert-dismissible fade show" role="alert" id="alertaEtanol">
+        <i class="material-icons icon">warning</i> Preço do <b>etanol</b> não encontrado no sistema. Por favor, preencha o preço manualmente.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    `;
+  } catch (error) {
+    console.error("Erro ao obter o preço do combustível:", error);
+    alert(
+      "Não foi possível obter o preço do combustível. Tente novamente mais tarde."
+    );
+    precoGasolinaInput.disabled = false;
+    precoEtanolInput.disabled = false;
+  }
+}
+
 function validarCampos() {
   const distancia = document.getElementById("distancia").value;
   const consumoGasolina = document.getElementById("consumoGasolina").value;
@@ -402,7 +450,7 @@ function verificarHistorico() {
   const historicoBtn = document.getElementById('historicoBtn');
   if (historico.length === 0) {
     historicoBtn.disabled = true;
-    historicoBtn.setAttribute('title', 'Nenhum histórico disponível');
+    historicoBtn.setAttribute('title', 'Ainda não há histórico');
   } else {
     historicoBtn.disabled = false;
     historicoBtn.removeAttribute('title');

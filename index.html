@@ -34,7 +34,7 @@
           <button class="btn btn-secondary flex-fill rounded" onclick="mostrarInterface('economia')">
             <span class="material-icons icon">savings</span> Comparar Economia de Combustível
           </button>
-          <button class="btn btn-info flex-fill rounded" id="historicoBtn" onclick="mostrarHistorico()" data-bs-toggle="tooltip" data-bs-placement="top" title="Ainda não há histórico">
+          <button class="btn btn-info flex-fill rounded" id="historicoBtn" onclick="mostrarHistorico()" data-bs-toggle="tooltip" data-bs-placement="top">
             <span class="material-icons icon">history</span> Ver Histórico
           </button>
         </div>
@@ -79,11 +79,11 @@
               type="number"
               class="form-control"
               id="consumoGasolina"
-              placeholder="Ex: 10 "
+              placeholder="Ex: 10"
               required
               oninput="validarCampos(); desbloquearCampoPreco('precoGasolina', 'consumoGasolina')"
             />
-            <small class="form-text">Média de consumo do seu automóvel com etanol.</small>
+            <small class="form-text">Média de consumo do seu automóvel com gasolina.</small>
           </div>
           <div class="form-group">
             <label for="consumoEtanol" class="form-label"
@@ -93,7 +93,7 @@
               type="number"
               class="form-control"
               id="consumoEtanol"
-              placeholder="Ex: 7 "
+              placeholder="Ex: 7"
               required
               oninput="validarCampos(); desbloquearCampoPreco('precoEtanol', 'consumoEtanol')"
             />
@@ -293,6 +293,8 @@
                     break;
                   }
                 }
+                // Fetch fuel prices for economy comparison
+                obterPrecoCombustivelEconomia(estado);
               })
               .catch(error => {
                 console.error('Erro ao obter a localização:', error);
@@ -309,11 +311,7 @@
         })
 
         // Disable history button if no history
-        if (localStorage.getItem('historico') === null || localStorage.getItem('historico') === '[]') {
-          document.getElementById('historicoBtn').disabled = true;
-        } else {
-          document.getElementById('historicoBtn').title = 'Ver Histórico';
-        }
+        verificarHistorico();
       });
 
       function mostrarInterface(interface) {
