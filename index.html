@@ -7,6 +7,7 @@
     <meta name="description" content="Calculadora de Combustível: Calcule o custo da sua viagem com gasolina ou etanol. Informe a distância, consumo médio e preço do combustível." />
     <meta name="keywords" content="calculadora de combustível, custo de viagem, gasolina, etanol, preço do combustível, consumo médio, distância percorrida" />
     <meta name="author" content="Alex Ricardo - alex.ricardo1999@hotmail.com" />
+    <link rel="icon" href="fuel-icon.png" type="image/png" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -20,13 +21,18 @@
   </head>
   <body>
     <div class="container">
-      <h1 class="text-center mb-4">
-        <span class="material-icons icon">local_gas_station</span>Calculadora de Combustível
-      </h1>
+      <div class="text-center mb-4">
+        <img src="fuel-icon.png" alt="Fuel Icon" class="title-icon" />
+        <h1 class="title">Calculadora de Combustível</h1>
+      </div>
       <p class="text-center mb-4">Calcule o custo da sua viagem com gasolina ou etanol.</p>
       <div class="text-center mb-4">
-        <button class="btn btn-outline-primary" onclick="mostrarInterface('custo')">Calcular Custo da Viagem</button>
-        <button class="btn btn-outline-secondary" onclick="mostrarInterface('economia')">Comparar Economia de Combustível</button>
+        <button class="btn btn-outline-primary mb-2" onclick="mostrarInterface('custo')">
+          <span class="material-icons icon">calculate</span> Calcular Custo da Viagem
+        </button>
+        <button class="btn btn-outline-secondary mb-2" onclick="mostrarInterface('economia')">
+          <span class="material-icons icon">savings</span> Comparar Economia de Combustível
+        </button>
       </div>
       <form id="formCusto" style="display: none;">
         <div class="form-row mb-3" id="estadoContainer" style="display: none;">
@@ -224,7 +230,7 @@
             onclick="compararEconomia()"
             disabled
           >
-            <span class="material-icons icon">compare_arrows</span>COMPARAR
+            <span class="material-icons icon">savings</span>COMPARAR
           </button>
           <button type="button" class="btn btn-secondary" onclick="limparEconomia()">
             <span class="material-icons icon">delete</span>LIMPAR
@@ -269,6 +275,50 @@
           console.error('Geolocalização não é suportada pelo navegador.');
         }
       });
+
+      function mostrarInterface(interface) {
+        document.getElementById('formCusto').style.display = 'none';
+        document.getElementById('formEconomia').style.display = 'none';
+        document.getElementById('alertas').innerHTML = '';
+        document.getElementById('resultado').innerHTML = '';
+        document.getElementById('litros').innerHTML = '';
+        document.getElementById('comparacao').innerHTML = '';
+        document.getElementById('economia').innerHTML = '';
+        document.getElementById('resultadoEconomia').innerHTML = '';
+
+        if (interface === 'custo') {
+          document.getElementById('formCusto').style.display = 'block';
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+              const lat = position.coords.latitude;
+              const lon = position.coords.longitude;
+              const apiKey = 'bdc_88e080ca82794d2ba3fa6e70a9f45156'; 
+              const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=pt`;
+              
+              axios.get(url)
+                .then(response => {
+                  const estado = response.data.principalSubdivision;
+                  const estadoSelect = document.getElementById('estado');
+                  for (let i = 0; i < estadoSelect.options.length; i++) {
+                    if (estadoSelect.options[i].text === estado) {
+                      estadoSelect.selectedIndex = i;
+                      obterPrecoCombustivel();
+                      validarCampos();
+                      break;
+                    }
+                  }
+                })
+                .catch(error => {
+                  console.error('Erro ao obter a localização:', error);
+                });
+            });
+          } else {
+            console.error('Geolocalização não é suportada pelo navegador.');
+          }
+        } else if (interface === 'economia') {
+          document.getElementById('formEconomia').style.display = 'block';
+        }
+      }
     </script>
   </body>
 </html>

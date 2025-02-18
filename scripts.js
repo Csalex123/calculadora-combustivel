@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 function mostrarInterface(interface) {
     limpar();
     limparEconomia();
+    document.getElementById("alertas").innerHTML = ""; // Clear warnings
     
     document.getElementById("formCusto").style.display = interface === 'custo' ? 'block' : 'none';
     document.getElementById("formEconomia").style.display = interface === 'economia' ? 'block' : 'none';
@@ -26,6 +27,9 @@ function mostrarInterface(interface) {
     const btnAtivo = document.querySelector(interface === 'custo' ? '.btn-outline-primary' : '.btn-outline-secondary');
     if (btnAtivo) {
       btnAtivo.classList.add('active');
+    }
+    if (interface === 'custo') {
+        obterLocalizacao(); // Re-fetch location when switching back to trip cost interface
     }
   }
 
