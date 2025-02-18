@@ -1,6 +1,7 @@
 body {
   font-family: Arial, sans-serif;
   background-color: #f5f0fa;
+  overflow-y: auto; /* Enable scrolling */
 }
 
 .container {
@@ -27,6 +28,7 @@ body {
   color: #007bff;
   font-size: 2rem;
   margin-top: 10px;
+  font-weight: bold;
 }
 
 .icon {
@@ -53,7 +55,27 @@ body {
 }
 
 .form-text {
-  color: #007bff;
+  color: #6c757d;
+}
+
+.history-modal {
+  max-height: 400px; /* Adjusted height to avoid double scroll */
+  overflow-y: auto;
+}
+
+.btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-group .btn {
+  border-radius: 20px; /* Ensure all buttons have rounded borders */
+}
+
+.modal-body {
+  max-height: 70vh; /* Increase modal body height */
+  overflow-y: auto; /* Ensure only the modal body scrolls */
 }
 
 @media (max-width: 768px) {
@@ -85,5 +107,9 @@ body {
   .btn-outline-primary,
   .btn-outline-secondary {
     margin-bottom: 10px;
+  }
+
+  .btn-group {
+    flex-direction: column;
   }
 }
