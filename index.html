@@ -371,20 +371,21 @@
       }
 
       function obterPrecoCombustivelEconomia(estado) {
-        // Simulate fetching fuel prices for economy comparison
-        const precoGasolina = 5.49; // Example price
-        const precoEtanol = 3.79; // Example price
-
-        document.getElementById('precoGasolinaEconomia').value = precoGasolina.toFixed(2).replace('.', ',');
-        document.getElementById('precoEtanolEconomia').value = precoEtanol.toFixed(2).replace('.', ',');
-        document.getElementById('precoGasolinaEconomiaEstado').innerText = `Preço obtido automaticamente para o estado ${estado}.`;
+        document.getElementById('precoGasolinaEconomia').placeholder = "Ex: 5,49";
+        document.getElementById('precoEtanolEconomia').placeholder = "Ex: 3,79";
+        document.getElementById('precoGasolinaEconomia').value = "";
+        document.getElementById('precoEtanolEconomia').value = "";
+        exibirAlerta(`Preço da gasolina obtido automaticamente para o estado ${estado}.`, 'info');
       }
 
       function exibirAlerta(mensagem, tipo) {
         const alertasDiv = document.getElementById('alertas');
         const alerta = document.createElement('div');
-        alerta.className = `alert alert-${tipo}`;
-        alerta.innerText = mensagem;
+        alerta.className = `alert alert-${tipo} alert-dismissible fade show`;
+        alerta.innerHTML = `
+          <i class="material-icons icon">info</i> ${mensagem}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        `;
         alertasDiv.appendChild(alerta);
 
         setTimeout(() => {
