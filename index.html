@@ -189,6 +189,7 @@
             class="form-text"
           >Informe o preço atual da gasolina.</small>
           <small id="precoGasolinaEconomiaEstado" class="form-text text-muted"></small>
+          <small id="precoGasolinaEconomiaEstadoLabel" class="form-text text-muted">Preço obtido do seu estado.</small>
         </div>
         <div class="mb-3">
           <label for="precoEtanolEconomia" class="form-label"
@@ -364,6 +365,29 @@
         } else if (interface === 'economia') {
           document.getElementById('formEconomia').style.display = 'block';
         }
+      }
+
+      function obterPrecoCombustivelEconomia(estado) {
+        // Simulate fetching fuel prices for economy comparison
+        const precoGasolina = 5.49; // Example price
+        const precoEtanol = 3.79; // Example price
+
+        document.getElementById('precoGasolinaEconomia').value = precoGasolina.toFixed(2).replace('.', ',');
+        document.getElementById('precoEtanolEconomia').value = precoEtanol.toFixed(2).replace('.', ',');
+        document.getElementById('precoGasolinaEconomiaEstado').innerText = `Preço obtido automaticamente para o estado ${estado}.`;
+        document.getElementById('precoGasolinaEconomiaEstadoLabel').style.display = 'block';
+      }
+
+      function exibirAlerta(mensagem, tipo) {
+        const alertasDiv = document.getElementById('alertas');
+        const alerta = document.createElement('div');
+        alerta.className = `alert alert-${tipo}`;
+        alerta.innerText = mensagem;
+        alertasDiv.appendChild(alerta);
+
+        setTimeout(() => {
+          alerta.remove();
+        }, 15000); // Remove alert after 15 seconds
       }
     </script>
   </body>

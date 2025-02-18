@@ -502,3 +502,15 @@ document.querySelectorAll('input[type="number"]').forEach(input => {
   });
 });
 
+// Set alerts to disappear after 15 seconds
+setTimeout(() => {
+  const alerts = document.querySelectorAll('.alert');
+  alerts.forEach(alert => {
+    alert.classList.remove('show');
+    alert.classList.add('fade');
+    setTimeout(() => {
+      alert.remove();
+    }, 1500);
+  });
+}, 15000);
+
