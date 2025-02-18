@@ -112,6 +112,13 @@ async function obterPrecoCombustivel() {
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
       `;
+    } else {
+      alertas.innerHTML += `
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+          <i class="material-icons icon">info</i> Preço da <b>gasolina</b> obtido automaticamente para o estado selecionado.
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      `;
     }
     alertas.innerHTML += `
       <div class="alert alert-warning alert-dismissible fade show" role="alert" id="alertaEtanol">
@@ -157,6 +164,13 @@ async function obterPrecoCombustivelEconomia() {
       alertas.innerHTML += `
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
           <i class="material-icons icon">warning</i> Preço da <b>gasolina</b> não encontrado no sistema. Por favor, preencha o preço manualmente.
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      `;
+    } else {
+      alertas.innerHTML += `
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+          <i class="material-icons icon">info</i> Preço da <b>gasolina</b> obtido automaticamente para o estado selecionado.
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
       `;
@@ -423,13 +437,14 @@ function mostrarHistorico() {
         <strong class="text-primary">${item.tipo === 'custo' ? 'Cálculo de Custo de Viagem' : 'Comparação de Economia de Combustível'}</strong>
         <span class="text-muted">(${item.timestamp})</span>
       </div>
-      ${item.dados.estado ? `<div><strong>Estado:</strong> ${item.dados.estado}</div>` : ''}
-      ${item.dados.distancia ? `<div><strong>Distância:</strong> ${item.dados.distancia} km</div>` : ''}
-      ${item.dados.consumoGasolina ? `<div><strong>Consumo Gasolina:</strong> ${item.dados.consumoGasolina} km/l</div>` : ''}
-      ${item.dados.consumoEtanol ? `<div><strong>Consumo Etanol:</strong> ${item.dados.consumoEtanol} km/l</div>` : ''}
-      ${item.dados.precoGasolina ? `<div><strong>Preço Gasolina:</strong> R$ ${item.dados.precoGasolina}</div>` : ''}
-      ${item.dados.precoEtanol ? `<div><strong>Preço Etanol:</strong> R$ ${item.dados.precoEtanol}</div>` : ''}
-      ${item.dados.economiaText ? `<div><strong>Economia:</strong> ${item.dados.economiaText}</div>` : ''}
+      ${item.dados.estado ? `<div><i class="material-icons icon">place</i> <strong>Estado:</strong> ${item.dados.estado}</div>` : ''}
+      ${item.dados.distancia ? `<div><i class="material-icons icon">directions_car</i> <strong>Distância:</strong> ${item.dados.distancia} km</div>` : ''}
+      ${item.dados.consumoGasolina ? `<div><i class="material-icons icon">local_gas_station</i> <strong>Consumo Gasolina:</strong> ${item.dados.consumoGasolina} km/l</div>` : ''}
+      ${item.dados.consumoEtanol ? `<div><i class="material-icons icon">local_gas_station</i> <strong>Consumo Etanol:</strong> ${item.dados.consumoEtanol} km/l</div>` : ''}
+      ${item.dados.precoGasolina ? `<div><i class="material-icons icon">attach_money</i> <strong>Preço Gasolina:</strong> R$ ${item.dados.precoGasolina}</div>` : ''}
+      ${item.dados.precoEtanol ? `<div><i class="material-icons icon">attach_money</i> <strong>Preço Etanol:</strong> R$ ${item.dados.precoEtanol}</div>` : ''}
+      ${item.dados.idaEVolta ? `<div><i class="material-icons icon">repeat</i> <strong>Ida e Volta:</strong> Sim</div>` : ''}
+      ${item.dados.economiaText ? `<div><i class="material-icons icon">savings</i> <strong>Economia:</strong> ${item.dados.economiaText}</div>` : ''}
       <div>${item.dados.resultado}</div>
     `;
     historicoList.appendChild(listItem);
@@ -480,3 +495,10 @@ document.getElementById('historicoModal').addEventListener('hidden.bs.modal', fu
 
 document.getElementById('historicoList').style.maxHeight = '400px';
 document.getElementById('historicoList').style.overflowY = 'auto';
+
+document.querySelectorAll('input[type="number"]').forEach(input => {
+  input.addEventListener('input', () => {
+    input.value = input.value.replace(/[^0-9.]/g, '');
+  });
+});
+

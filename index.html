@@ -67,6 +67,7 @@
             placeholder="Ex: 100"
             required
             oninput="validarCampos()"
+            onkeypress="return event.charCode >= 48 && event.charCode <= 57"
           />
           <small class="form-text">Informe a distância total que você irá percorrer.</small>
         </div>
@@ -82,6 +83,7 @@
               placeholder="Ex: 10"
               required
               oninput="validarCampos(); desbloquearCampoPreco('precoGasolina', 'consumoGasolina')"
+              onkeypress="return event.charCode >= 48 && event.charCode <= 57"
             />
             <small class="form-text">Média de consumo do seu automóvel com gasolina.</small>
           </div>
@@ -96,6 +98,7 @@
               placeholder="Ex: 7"
               required
               oninput="validarCampos(); desbloquearCampoPreco('precoEtanol', 'consumoEtanol')"
+              onkeypress="return event.charCode >= 48 && event.charCode <= 57"
             />
             <small class="form-text">Média de consumo do seu automóvel com etanol.</small>
           </div>
@@ -119,6 +122,7 @@
               class="form-text"
             >Informe o preço atual da gasolina.</small>
             <small id="precoGasolinaEstado" class="form-text text-muted"></small>
+            <small id="precoGasolinaEstadoLabel" class="form-text text-muted">Preço obtido do seu estado.</small>
           </div>
           <div class="form-group">
             <label for="precoEtanol" class="form-label"
@@ -213,6 +217,7 @@
             id="consumoGasolinaEconomia"
             placeholder="Ex: 10"
             oninput="validarCamposEconomia()"
+            onkeypress="return event.charCode >= 48 && event.charCode <= 57"
           />
           <small class="form-text">Média de consumo do seu automóvel com gasolina.</small>
         </div>
@@ -226,6 +231,7 @@
             id="consumoEtanolEconomia"
             placeholder="Ex: 7"
             oninput="validarCamposEconomia()"
+            onkeypress="return event.charCode >= 48 && event.charCode <= 57"
           />
           <small class="form-text">Média de consumo do seu automóvel com etanol.</small>
         </div>
